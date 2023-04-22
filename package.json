@@ -1,13 +1,26 @@
 {
-  "name": "MyWallet",
+  "name": "my_wallet",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install .config/husky",
+    "lint:fix": "eslint src/*.js --fix",
+    "lint": "eslint src/*.tsx"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    ".js": [
+      "npm run lint:fix",
+      "npm run lint"
+    ]
   },
   "dependencies": {
     "react": "18.2.0",
@@ -24,6 +37,7 @@
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.2.1",
     "eslint": "^8.19.0",
+    "husky": "^8.0.0",
     "jest": "^29.2.1",
     "metro-react-native-babel-preset": "0.73.9",
     "prettier": "^2.4.1",
