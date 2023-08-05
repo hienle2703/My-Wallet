@@ -20,14 +20,17 @@ const AppNavigation = () => {
             gestureEnabled: false,
             headerShown: false
           }}
-          initialRouteName={'SplashScreen'}
+          initialRouteName={'HomeScreen'}
         >
           <AppStack.Screen name='SplashScreen' component={SplashScreen} />
+          <AppStack.Screen name={'HomeScreen'} component={HomeScreen} />
+          <AppStack.Screen name={'CalendarScreen'} component={CalendarScreen} />
+          <AppStack.Screen
+            name={'StatisticScreen'}
+            component={StatisticScreen}
+          />
+          <AppStack.Screen name={'WalletScreen'} component={WalletScreen} />
         </AppStack.Navigator>
-        <AppStack.Screen name={'HomeScreen'} component={HomeScreen} />
-        <AppStack.Screen name={'CalendarScreen'} component={CalendarScreen} />
-        <AppStack.Screen name={'StatisticScreen'} component={StatisticScreen} />
-        <AppStack.Screen name={'WalletScreen'} component={WalletScreen} />
       </NavigationContainer>
     </SafeAreaProvider>
   )
