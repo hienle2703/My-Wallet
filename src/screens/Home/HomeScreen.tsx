@@ -1,14 +1,16 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from './Styles/HomeScreenStyles'
 import LinearGradient from 'react-native-linear-gradient'
 import FastImage from 'react-native-fast-image'
+import TransactionRow from '../../components/Home/TransactionRow'
+import { TRANSACTION_ROW } from '@/mock_data/MockDataHome'
 
 const HomeScreen = () => {
-  return (
-    <SafeAreaView style={styles.screenBase}>
+  const renderTopComponents = () => {
+    return (
       <View style={styles.headerWrapBase}>
         <LinearGradient
           start={{ x: 0, y: 1 }}
@@ -73,6 +75,16 @@ const HomeScreen = () => {
           </View>
         </LinearGradient>
       </View>
+    )
+  }
+
+  const renderTransactionRows = ({ item, index }) => {
+    return <TransactionRow key={index} data={item} />
+  }
+
+  return (
+    <SafeAreaView style={styles.screenBase}>
+      {renderTopComponents()}
       <View style={styles.body}>
         <View style={styles.bodyHeader}>
           <Text style={styles.bodyTitle}>Recent Transactions</Text>
@@ -80,6 +92,11 @@ const HomeScreen = () => {
             <Text style={styles.seeAllText}>See all</Text>
           </TouchableOpacity>
         </View>
+        <FlatList
+          renderItem={renderTransactionRows}
+          data={TRANSACTION_ROW}
+          style={styles.containerStyle}
+        />
       </View>
     </SafeAreaView>
   )

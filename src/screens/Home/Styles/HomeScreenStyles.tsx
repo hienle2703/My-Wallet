@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   screenBase: {
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    flex: 1
   },
   headerWrap: {
     paddingVertical: 25,
@@ -70,10 +71,10 @@ export default StyleSheet.create({
   },
   body: {
     backgroundColor: 'white',
-    height: '100%',
     borderTopLeftRadius: 40,
     paddingHorizontal: 20,
-    paddingTop: 20
+    paddingTop: 20,
+    flex: 1
   },
   bodyHeader: {
     flexDirection: 'row',
@@ -90,5 +91,8 @@ export default StyleSheet.create({
   },
   budgetBox: {
     backgroundColor: '#007B5E'
+  },
+  containerStyle: {
+    flex: 1
   }
 })
