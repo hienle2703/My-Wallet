@@ -13,7 +13,6 @@ const AppNavigation = () => {
   const AppStack = createNativeStackNavigator()
 
   return (
-    <SafeAreaProvider>
       <NavigationContainer>
         <AppStack.Navigator
           screenOptions={{
@@ -32,7 +31,6 @@ const AppNavigation = () => {
           <AppStack.Screen name={'WalletScreen'} component={WalletScreen} />
         </AppStack.Navigator>
       </NavigationContainer>
-    </SafeAreaProvider>
   )
 }
 

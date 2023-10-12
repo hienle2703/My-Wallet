@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   screenBase: {
-    backgroundColor: 'black',
     flex: 1
   },
   headerWrap: {

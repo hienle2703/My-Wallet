@@ -83,7 +83,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.screenBase}>
+    <View style={styles.screenBase}>
       {renderTopComponents()}
       <View style={styles.body}>
         <View style={styles.bodyHeader}>
@@ -98,7 +98,7 @@ const HomeScreen = () => {
           style={styles.containerStyle}
         />
       </View>
-    </SafeAreaView>
+    </View>
   )
 }
 
