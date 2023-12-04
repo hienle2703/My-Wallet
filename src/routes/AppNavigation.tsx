@@ -8,13 +8,14 @@ import { HomeScreen } from '../screens/Home'
 import { CalendarScreen } from '../screens/Calendar'
 import { StatisticScreen } from '../screens/Statistic'
 import { WalletScreen } from '../screens/Wallet'
+import BottomTabs from './BottomTab'
 
 const AppNavigation = () => {
   const AppStack = createNativeStackNavigator()
 
   return (
       <NavigationContainer>
-        <AppStack.Navigator
+        {/* <AppStack.Navigator
           screenOptions={{
             gestureEnabled: false,
             headerShown: false
@@ -29,7 +30,8 @@ const AppNavigation = () => {
             component={StatisticScreen}
           />
           <AppStack.Screen name={'WalletScreen'} component={WalletScreen} />
-        </AppStack.Navigator>
+        </AppStack.Navigator> */}
+        <BottomTabs />
       </NavigationContainer>
   )
 }
