@@ -96,6 +96,8 @@ const HomeScreen = () => {
           renderItem={renderTransactionRows}
           data={TRANSACTION_ROW}
           style={styles.containerStyle}
+          contentContainerStyle={styles.contentFlatListStyle}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </View>

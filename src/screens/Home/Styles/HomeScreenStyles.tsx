@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   screenBase: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'black'
   },
   headerWrap: {
     paddingVertical: 25,
@@ -93,5 +94,8 @@ export default StyleSheet.create({
   },
   containerStyle: {
     flex: 1
+  },
+  contentFlatListStyle: {
+    paddingBottom: 100
   }
 })
