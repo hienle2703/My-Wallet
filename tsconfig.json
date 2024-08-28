@@ -22,9 +22,18 @@
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
-    "skipLibCheck": false /* Skip type checking of declaration files. */,
+    "skipLibCheck": true /* Skip type checking of declaration files. */,
 
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": [
+      "@babel/generator",
+      "@babel/template",
+      "@babel/traverse",
+      "graceful-fs",
+      "istanbul-lib-coverage",
+      "istanbul-lib-report",
+      "node"
+    ]
   },
   "exclude": [
     "node_modules",
