@@ -1,12 +1,25 @@
 import { View, Text } from 'react-native'
 import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { ACCESS_TOKEN } from '@/constants/keyStorage'
+import RNSecureStorage from 'rn-secure-storage'
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.replace('SignInScreen')
-    }, 1000)
+    RNSecureStorage.getItem(ACCESS_TOKEN)
+      .then((res) => {
+        // TODO: Gắn API Verify Token
+        if (res) {
+          navigation.replace('HomeStack')
+        } else {
+          navigation.replace('SignInScreen')
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    const timer = setTimeout(() => {}, 1000)
     return () => clearTimeout(timer)
   }, [])
 

@@ -2,13 +2,15 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/Feather'
 import { useDispatch, useSelector } from 'react-redux'
-import { signIn } from '@/redux/actions/userActions'
+import { signIn, signUp } from '@/redux/actions/userActions'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Loading } from '@/components/Loading'
 
-const SignInScreen = ({ navigation }) => {
+const SignUpScreen = ({ navigation }) => {
+  const [username, setUsername] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [isShowPassword, setIsShowPassword] = useState<boolean>(true)
 
   const dispatch = useDispatch<any>()
@@ -16,8 +18,8 @@ const SignInScreen = ({ navigation }) => {
     (state: any) => state.user
   )
 
-  const goSignIn = () => {
-    dispatch(signIn(email, password))
+  const goSignUp = () => {
+    dispatch(signUp(username, email, password))
   }
 
   useEffect(() => {
@@ -52,12 +54,29 @@ const SignInScreen = ({ navigation }) => {
       <View
         style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 20 }}
       >
-        <Text style={{ color: '#003F02', fontWeight: 'bold', fontSize: 50 }}>
-          {'Welcome\nback'}
+        <Text
+          style={{
+            color: '#003F02',
+            fontWeight: 'bold',
+            fontSize: 50,
+            textAlign: 'right'
+          }}
+        >
+          {'Create\naccount'}
         </Text>
         <TextInput
-          placeholder='Email'
+          placeholder='Username'
           style={{ borderBottomWidth: 2, borderBottomColor: '#9D9D9D' }}
+          onChangeText={(username) => setUsername(username)}
+          autoCapitalize='none'
+        />
+        <TextInput
+          placeholder='Email'
+          style={{
+            borderBottomWidth: 2,
+            borderBottomColor: '#9D9D9D',
+            marginTop: 20
+          }}
           onChangeText={(e) => setEmail(e)}
           autoCapitalize='none'
         />
@@ -68,6 +87,25 @@ const SignInScreen = ({ navigation }) => {
             secureTextEntry={isShowPassword}
             maxLength={16}
             onChangeText={(password) => setPassword(password)}
+          />
+          <TouchableOpacity
+            style={{ position: 'absolute', right: 0 }}
+            onPress={() => setIsShowPassword(!isShowPassword)}
+          >
+            <Icon
+              name={isShowPassword ? 'eye' : 'eye-off'}
+              size={24}
+              color='grey'
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{ justifyContent: 'center', marginTop: 20 }}>
+          <TextInput
+            placeholder='Confirm password'
+            style={{ borderBottomWidth: 2, borderBottomColor: '#9D9D9D' }}
+            secureTextEntry={isShowPassword}
+            maxLength={16}
+            onChangeText={(password) => setConfirmPassword(password)}
           />
           <TouchableOpacity
             style={{ position: 'absolute', right: 0 }}
@@ -93,15 +131,13 @@ const SignInScreen = ({ navigation }) => {
             <Text
               style={{ fontWeight: 'bold', fontSize: 10, color: '#A1A1A1' }}
             >
-              Don't have an account?
+              Already have an account?
             </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('SignUpScreen')}
-            >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text
                 style={{ fontWeight: 'bold', fontSize: 15, color: '#6E6E6E' }}
               >
-                Register
+                Login
               </Text>
             </TouchableOpacity>
           </View>
@@ -111,7 +147,7 @@ const SignInScreen = ({ navigation }) => {
               borderRadius: 50,
               backgroundColor: '#17C25C'
             }}
-            onPress={goSignIn}
+            onPress={goSignUp}
           >
             <Icon name={'arrow-right'} size={30} color='#FFFFFF' />
           </TouchableOpacity>
@@ -156,4 +192,4 @@ const SignInScreen = ({ navigation }) => {
   )
 }
 
-export default SignInScreen
+export default SignUpScreen

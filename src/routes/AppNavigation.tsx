@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { SplashScreen } from '../screens/Splash'
 import BottomTabs from './BottomTab'
 import { SignInScreen } from '@/screens/SignIn'
+import { SignUpScreen } from '@/screens/SignUp'
 
 const AppNavigation = () => {
   const AppStack = createNativeStackNavigator()
@@ -20,7 +21,8 @@ const AppNavigation = () => {
       >
         <AppStack.Screen name='SplashScreen' component={SplashScreen} />
         <AppStack.Screen name='SignInScreen' component={SignInScreen} />
-        {/* <AppStack.Screen name='SignUpScreen' component={SignUpScreen} /> */}
+        <AppStack.Screen name='SignUpScreen' component={SignUpScreen} />
+
         <AppStack.Screen name='HomeStack' component={BottomTabs} />
       </AppStack.Navigator>
     </NavigationContainer>
