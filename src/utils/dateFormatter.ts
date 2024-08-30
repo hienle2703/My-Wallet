@@ -1,13 +1,24 @@
 const transactionDateFormat = (date: Date) => {
+  // Chuyển chuỗi ngày thành đối tượng Date
+  const dateString = new Date(date)
+
+  // Định dạng ngày
   const formatter = new Intl.DateTimeFormat('vi')
-  const dateFormatted = formatter.format(date)
+  const dateFormatted = formatter.format(dateString)
 
+  // Lấy ngày hôm nay
+  const today = new Date()
+  const todayFormatted = formatter.format(today)
+
+  // Lấy ngày hôm qua
   const yesterday = new Date()
-  yesterday.setDate(yesterday.getDate() - 1)
+  yesterday.setDate(today.getDate() - 1)
+  const yesterdayFormatted = formatter.format(yesterday)
 
-  if (dateFormatted === formatter.format(new Date())) {
+  // So sánh và trả về kết quả
+  if (dateFormatted === todayFormatted) {
     return 'Today'
-  } else if (date.toDateString() === yesterday.toDateString()) {
+  } else if (dateFormatted === yesterdayFormatted) {
     return 'Yesterday'
   }
 

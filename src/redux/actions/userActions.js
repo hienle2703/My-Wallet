@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { server } from '../store'
 import { setItemSecureStorage } from '@/utils/secureStorage'
 import { ACCESS_TOKEN } from '@/constants/keyStorage'
+import api from '@/services/api'
 
 export const signIn = (email, password) => async (dispatch) => {
   try {
@@ -9,18 +9,7 @@ export const signIn = (email, password) => async (dispatch) => {
       type: 'loginRequest'
     })
 
-    const { data } = await axios.post(
-      `${server}/user/login`,
-      { email, password },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
-      }
-    )
-
-    console.log(data, data.token, '===========data')
+    const { data } = await api.post(`${server}/user/login`, { email, password })
 
     setItemSecureStorage(ACCESS_TOKEN, data.token)
 
@@ -42,16 +31,11 @@ export const signUp = (name, email, password) => async (dispatch) => {
       type: 'signUpRequest'
     })
 
-    const { data } = await axios.post(
-      `${server}/user/new`,
-      { name, email, password },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
-      }
-    )
+    const { data } = await api.post(`${server}/user/new`, {
+      name,
+      email,
+      password
+    })
 
     dispatch({
       type: 'signUpSuccess',
@@ -61,6 +45,27 @@ export const signUp = (name, email, password) => async (dispatch) => {
     dispatch({
       type: 'signUpFail',
       payload: error.response.data.message
+    })
+  }
+}
+
+export const verifyToken = async (dispatch) => {
+  try {
+    dispatch({
+      type: 'verifyTokenRequest'
+    })
+
+    const { data } = await api.post(`${server}/user/verify`)
+
+    dispatch({
+      type: 'verifyTokenSuccess',
+      payload: data
+    })
+  } catch (err) {
+    console.log(err)
+    dispatch({
+      type: 'verifyTokenFail',
+      payload: err.response.data.message
     })
   }
 }

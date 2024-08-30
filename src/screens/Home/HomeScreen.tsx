@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from './Styles/HomeScreenStyles'
@@ -7,8 +7,13 @@ import LinearGradient from 'react-native-linear-gradient'
 import FastImage from 'react-native-fast-image'
 import TransactionRow from '../../components/Home/TransactionRow'
 import { TRANSACTION_ROW } from '@/mock_data/MockDataHome'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllTransactions } from '@/redux/actions/transactionActions'
 
 const HomeScreen = () => {
+  const { transactions } = useSelector((state: any) => state.transaction)
+  const dispatch = useDispatch()
+
   const renderTopComponents = () => {
     return (
       <View style={styles.headerWrapBase}>
@@ -79,8 +84,13 @@ const HomeScreen = () => {
   }
 
   const renderTransactionRows = ({ item, index }) => {
+    console.log(item, '=========== item')
     return <TransactionRow key={index} data={item} />
   }
+
+  useEffect(() => {
+    getAllTransactions(dispatch)
+  }, [])
 
   return (
     <View style={styles.screenBase}>
@@ -94,7 +104,7 @@ const HomeScreen = () => {
         </View>
         <FlatList
           renderItem={renderTransactionRows}
-          data={TRANSACTION_ROW}
+          data={transactions}
           style={styles.containerStyle}
           contentContainerStyle={styles.contentFlatListStyle}
           showsVerticalScrollIndicator={false}

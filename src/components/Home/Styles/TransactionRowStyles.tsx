@@ -37,5 +37,9 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 15,
     color: '#000000'
+  },
+  noteText: {
+    fontSize: 10,
+    color: '#8A8A8A'
   }
 })

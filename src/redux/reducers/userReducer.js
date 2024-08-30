@@ -8,6 +8,9 @@ export const userReducer = createReducer({}, (builder) => {
     .addCase('signUpRequest', (state, action) => {
       state.loading = true
     })
+    .addCase('verifyTokenRequest', (state, action) => {
+      state.loading = true
+    })
 
   builder
     .addCase('loginSuccess', (state, action) => {
@@ -20,6 +23,12 @@ export const userReducer = createReducer({}, (builder) => {
       state.user = action.payload
       state.isAuthenticated = true
     })
+    .addCase('verifyTokenSuccess', (state, action) => {
+      console.log(action, '=============action')
+      state.loading = false
+      state.user = action.payload.user
+      state.isAuthenticated = true
+    })
 
   builder
     .addCase('loginFail', (state, action) => {
@@ -29,6 +38,10 @@ export const userReducer = createReducer({}, (builder) => {
     .addCase('signUpFail', (state, action) => {
       state.loading = false
       state.error = action.payload
+    })
+    .addCase('verifyTokenFail', (state, action) => {
+      state.loading = false
+      state.isAuthenticated = false
     })
 
   builder.addCase('clearError', (state) => {
