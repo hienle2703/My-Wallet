@@ -24,7 +24,6 @@ export const userReducer = createReducer({}, (builder) => {
       state.isAuthenticated = true
     })
     .addCase('verifyTokenSuccess', (state, action) => {
-      console.log(action, '=============action')
       state.loading = false
       state.user = action.payload.user
       state.isAuthenticated = true

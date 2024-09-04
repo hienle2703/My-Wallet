@@ -62,7 +62,6 @@ export const verifyToken = async (dispatch) => {
       payload: data
     })
   } catch (err) {
-    console.log(err)
     dispatch({
       type: 'verifyTokenFail',
       payload: err.response.data.message

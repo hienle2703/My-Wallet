@@ -84,7 +84,6 @@ const HomeScreen = () => {
   }
 
   const renderTransactionRows = ({ item, index }) => {
-    console.log(item, '=========== item')
     return <TransactionRow key={index} data={item} />
   }
 

@@ -5,6 +5,8 @@ import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { getAllWallets } from '@/redux/actions/walletActions'
+import { PieChart } from 'react-native-gifted-charts'
+import { balanceFormatter } from '@/utils/balanceFormatter'
 
 const TOTAL_BALANCE = '20.000.000đ'
 
@@ -22,6 +24,12 @@ const WalletScreen = () => {
 
   const renderWallets = ({ item, index }) => {
     console.log(item, '===========')
+    const { name, currentBalance, initialBalance } = item || {}
+
+    const dataChart = [
+      { value: currentBalance, color: 'white' },
+      { value: initialBalance - currentBalance, color: 'gray' }
+    ]
     return (
       <View
         style={{
@@ -33,7 +41,11 @@ const WalletScreen = () => {
           borderRadius: 15
         }}
       >
-        <Text>Wallet</Text>
+        <PieChart donut radius={20} innerRadius={15} data={dataChart} backgroundColor='green' />
+        <Text style={{ fontSize: 15, color: 'white', marginTop: 10 }}>
+          {balanceFormatter(+currentBalance)}
+        </Text>
+        <Text style={{ fontSize: 15, color: '#D2D2D2' }}>{name}</Text>
       </View>
     )
   }
