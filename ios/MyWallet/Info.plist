@@ -70,5 +70,9 @@
       <string>Octicons.ttf</string>
       <string>Zocial.ttf</string>
     </array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to your photo library to upload your profile picture.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to your camera to take and upload your profile picture.</string>
 </dict>
 </plist>

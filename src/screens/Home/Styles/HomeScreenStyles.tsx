@@ -17,14 +17,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: 10
   },
-  avatarContainer: {
-    height: 64,
-    width: 64,
-    backgroundColor: 'yellow',
-    borderRadius: 15
-  },
+  avatarContainer: {},
   avatar: {
     height: '100%',
     width: '100%',
