@@ -11,6 +11,9 @@ export const userReducer = createReducer({}, (builder) => {
     .addCase('verifyTokenRequest', (state, action) => {
       state.loading = true
     })
+    .addCase('updateAvatarRequest', (state, action) => {
+      state.loading = true
+    })
 
   builder
     .addCase('loginSuccess', (state, action) => {
@@ -28,6 +31,10 @@ export const userReducer = createReducer({}, (builder) => {
       state.user = action.payload.user
       state.isAuthenticated = true
     })
+    .addCase('updateAvatarSuccess', (state, action) => {
+      state.loading = false
+      state.user = action.payload.user
+    })
 
   builder
     .addCase('loginFail', (state, action) => {
@@ -41,6 +48,9 @@ export const userReducer = createReducer({}, (builder) => {
     .addCase('verifyTokenFail', (state, action) => {
       state.loading = false
       state.isAuthenticated = false
+    })
+    .addCase('updateAvatarFailure', (state, action) => {
+      state.loading = false
     })
 
   builder.addCase('clearError', (state) => {

@@ -68,3 +68,29 @@ export const verifyToken = async (dispatch) => {
     })
   }
 }
+
+export const updateAvatar = (formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: 'updateAvatarRequest'
+    })
+
+    const { data } = await api.put(`${server}/user/update-avatar`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      withCredentials: true
+    })
+
+
+    dispatch({
+      type: 'updateAvatarSuccess',
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: 'updateAvatarFail',
+      payload: error.response.data.message
+    })
+  }
+}

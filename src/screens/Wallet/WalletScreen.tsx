@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
@@ -7,6 +7,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { getAllWallets } from '@/redux/actions/walletActions'
 import { PieChart } from 'react-native-gifted-charts'
 import { balanceFormatter } from '@/utils/balanceFormatter'
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
+import { updateAvatar } from '@/redux/actions/userActions'
+import mime from 'mime'
 
 const TOTAL_BALANCE = '20.000.000đ'
 
@@ -18,12 +21,53 @@ const WalletScreen = () => {
   const { user } = useSelector((state: any) => state.user)
   const { wallets } = useSelector((state: any) => state.wallet)
 
-  const dispatch = useDispatch()
 
-  console.log(wallets, '==============wallets')
+  const dispatch = useDispatch<any>()
+
+  const createFormUpload = async (image) => {
+    const myForm = new FormData()
+    myForm.append('file', {
+      uri: image,
+      type: mime.getType(image),
+      name: image.split('/').pop()
+    })
+
+    dispatch(updateAvatar(myForm))
+  }
+
+  const onChangeAvatar = async () => {
+    Alert.alert(
+      'Change profile image',
+      'Please choose a method to upload the new avatar',
+      [
+        {
+          text: 'Upload from library',
+          onPress: async () => {
+            const result = await launchImageLibrary({
+              mediaType: 'photo',
+              quality: 0.8
+            })
+
+            result?.assets && createFormUpload(result.assets[0].uri)
+          }
+        },
+        {
+          text: 'Take photo',
+          onPress: async () => {
+            const result = await launchCamera({
+              mediaType: 'photo',
+              quality: 0.8
+            })
+
+            result?.assets && createFormUpload(result.assets[0].uri)
+          }
+        }
+      ],
+      { cancelable: true }
+    )
+  }
 
   const renderWallets = ({ item, index }) => {
-    console.log(item, '===========')
     const { name, currentBalance, initialBalance } = item || {}
 
     const dataChart = [
@@ -41,7 +85,13 @@ const WalletScreen = () => {
           borderRadius: 15
         }}
       >
-        <PieChart donut radius={20} innerRadius={15} data={dataChart} backgroundColor='green' />
+        <PieChart
+          donut
+          radius={20}
+          innerRadius={15}
+          data={dataChart}
+          backgroundColor='green'
+        />
         <Text style={{ fontSize: 15, color: 'white', marginTop: 10 }}>
           {balanceFormatter(+currentBalance)}
         </Text>
@@ -61,37 +111,40 @@ const WalletScreen = () => {
           width: '100%',
           paddingHorizontal: 20,
           alignItems: 'center',
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-          marginTop: 10
+          justifyContent: 'center',
+
+          marginTop: 10,
+          height: 50
         }}
       >
-        <View>
-          <Text style={{ fontSize: 16, color: '#8A8A8A' }}>Hello,</Text>
-          <Text style={{ fontSize: 20, fontWeight: '600' }}>{user?.name}</Text>
-        </View>
         <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Wallets</Text>
-        <View
+        <TouchableOpacity
           style={{
             height: 50,
-            width: 50,
-            backgroundColor: 'yellow',
-            borderRadius: 15
+            aspectRatio: 1,
+            backgroundColor: 'white',
+            borderRadius: 15,
+
+            position: 'absolute',
+            right: 20
           }}
+          onPress={onChangeAvatar}
         >
           <FastImage
             source={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGOIY_xfOWs3j5IVU6oSrWaID4BopWqYAV1hQ9pK4WO_uXc68fLuQfZWjF3epxPVpgEU8&usqp=CAU'
+              uri:
+                user?.avatar?.url ??
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGOIY_xfOWs3j5IVU6oSrWaID4BopWqYAV1hQ9pK4WO_uXc68fLuQfZWjF3epxPVpgEU8&usqp=CAU'
             }}
             style={{
               height: '100%',
               width: '100%',
               borderRadius: 15,
-              backgroundColor: 'yellow'
+              backgroundColor: 'white'
             }}
-            resizeMode={FastImage.resizeMode.contain}
+            resizeMode={FastImage.resizeMode.cover}
           />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <LinearGradient

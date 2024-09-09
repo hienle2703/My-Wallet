@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllTransactions } from '@/redux/actions/transactionActions'
 
 const HomeScreen = () => {
+  const { user } = useSelector((state: any) => state.user)
   const { transactions } = useSelector((state: any) => state.transaction)
   const dispatch = useDispatch()
 
@@ -25,15 +26,20 @@ const HomeScreen = () => {
         >
           <View style={styles.headerPage}>
             <View style={styles.avatarContainer}>
-              <FastImage
+              {/* <FastImage
                 source={{
                   uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGOIY_xfOWs3j5IVU6oSrWaID4BopWqYAV1hQ9pK4WO_uXc68fLuQfZWjF3epxPVpgEU8&usqp=CAU'
                 }}
                 style={styles.avatar}
                 resizeMode={FastImage.resizeMode.contain}
               />
+             */}
+              <Text style={{ fontSize: 16, color: 'white' }}>Hello,</Text>
+              <Text style={{ fontSize: 20, fontWeight: '600', color: 'white' }}>
+                {user?.name}
+              </Text>
             </View>
-            <Text style={styles.homeTitle}>Home</Text>
+            {/* <Text style={styles.homeTitle}>Home</Text> */}
             <TouchableOpacity style={styles.searchBox}>
               <LinearGradient
                 start={{ x: 0, y: 1 }}
