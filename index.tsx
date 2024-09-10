@@ -3,17 +3,22 @@ import { name as appName } from './app.json'
 import AppNavigation from './src/routes/AppNavigation'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const Index = () => {
   return (
-    <Provider store={store}>
+    <>
       <StatusBar
         backgroundColor={'transparent'}
         barStyle={'dark-content'}
-        translucent={false}
+        translucent
       />
-      <AppNavigation />
-    </Provider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Provider store={store}>
+          <AppNavigation />
+        </Provider>
+      </GestureHandlerRootView>
+    </>
   )
 }
 

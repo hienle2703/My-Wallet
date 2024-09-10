@@ -20,7 +20,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 10
   },
-  avatarContainer: {},
+  avatarContainer: {
+    marginTop: 15
+  },
   avatar: {
     height: '100%',
     width: '100%',

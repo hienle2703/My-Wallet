@@ -1,12 +1,9 @@
-import { View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList, StatusBar } from 'react-native'
 import React, { useEffect } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from './Styles/HomeScreenStyles'
 import LinearGradient from 'react-native-linear-gradient'
-import FastImage from 'react-native-fast-image'
 import TransactionRow from '../../components/Home/TransactionRow'
-import { TRANSACTION_ROW } from '@/mock_data/MockDataHome'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllTransactions } from '@/redux/actions/transactionActions'
 
@@ -99,6 +96,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.screenBase}>
+      <StatusBar barStyle={'light-content'} />
       {renderTopComponents()}
       <View style={styles.body}>
         <View style={styles.bodyHeader}>
