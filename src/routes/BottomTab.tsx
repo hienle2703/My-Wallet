@@ -8,6 +8,22 @@ import { View } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { styles } from './Styles/BottomTabStyles'
 import Animated from 'react-native-reanimated'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import CreateWalletScreen from '@/screens/Wallet/Create-Wallet/CreateWalletScreen'
+
+const WalletStack = createNativeStackNavigator()
+const WalletStackScreen = () => {
+  return (
+    <WalletStack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <WalletStack.Screen name='WalletHome' component={WalletScreen} />
+      <WalletStack.Screen name='CreateWallet' component={CreateWalletScreen} />
+    </WalletStack.Navigator>
+  )
+}
 
 const BottomTabs = () => {
   const Tab = createBottomTabNavigator()
@@ -62,7 +78,7 @@ const BottomTabs = () => {
       />
       <Tab.Screen
         name='Wallet'
-        component={WalletScreen}
+        component={WalletStackScreen}
         options={{
           tabBarIcon: ({ color, size, focused }) =>
             renderIndicatorTab('wallet', color, focused, size)

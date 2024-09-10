@@ -1,4 +1,12 @@
-import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Alert,
+  StatusBar,
+  Dimensions
+} from 'react-native'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
@@ -10,6 +18,7 @@ import { balanceFormatter } from '@/utils/balanceFormatter'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { updateAvatar } from '@/redux/actions/userActions'
 import mime from 'mime'
+import { Screen } from 'react-native-screens'
 
 const TOTAL_BALANCE = '20.000.000đ'
 
@@ -17,10 +26,9 @@ const renderKeyWallets = (_, index) => {
   return `wallet-${index}`
 }
 
-const WalletScreen = () => {
+const WalletScreen = ({ navigation }) => {
   const { user } = useSelector((state: any) => state.user)
   const { wallets } = useSelector((state: any) => state.wallet)
-
 
   const dispatch = useDispatch<any>()
 
@@ -67,8 +75,12 @@ const WalletScreen = () => {
     )
   }
 
+  const onCreateWallet = () => {
+    navigation.navigate('CreateWallet')
+  }
+
   const renderWallets = ({ item, index }) => {
-    const { name, currentBalance, initialBalance } = item || {}
+    const { name, currentBalance, initialBalance, color } = item || {}
 
     const dataChart = [
       { value: currentBalance, color: 'white' },
@@ -77,11 +89,11 @@ const WalletScreen = () => {
     return (
       <View
         style={{
-          width: '48%',
-          backgroundColor: 'green',
+          width: (Dimensions.get('window').width - 50) / 2,
+          backgroundColor: color ?? 'green',
           paddingHorizontal: 15,
           paddingVertical: 20,
-          marginTop: 10,
+          marginBottom: 10,
           borderRadius: 15
         }}
       >
@@ -90,7 +102,7 @@ const WalletScreen = () => {
           radius={20}
           innerRadius={15}
           data={dataChart}
-          backgroundColor='green'
+          backgroundColor={color ?? 'green'}
         />
         <Text style={{ fontSize: 15, color: 'white', marginTop: 10 }}>
           {balanceFormatter(+currentBalance)}
@@ -105,7 +117,14 @@ const WalletScreen = () => {
   }, [])
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'white',
+        paddingTop: StatusBar.currentHeight
+      }}
+    >
+      <StatusBar barStyle={'dark-content'} />
       <View
         style={{
           width: '100%',
@@ -196,7 +215,7 @@ const WalletScreen = () => {
           }}
         >
           <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Your wallets</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onCreateWallet}>
             <LinearGradient
               start={{ x: 0.2, y: 0.2 }}
               end={{ x: 1, y: 1 }}
@@ -218,7 +237,10 @@ const WalletScreen = () => {
           data={wallets}
           extraData={wallets}
           numColumns={2}
-          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          contentContainerStyle={{ marginTop: 10 }}
+          columnWrapperStyle={{
+            justifyContent: 'space-between'
+          }}
         />
       </View>
     </View>

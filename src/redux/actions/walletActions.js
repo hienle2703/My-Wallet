@@ -20,3 +20,28 @@ export const getAllWallets = async (dispatch) => {
     })
   }
 }
+
+export const createWallet = async (dispatch, formData) => {
+  try {
+    dispatch({
+      type: 'createWalletRequest'
+    })
+
+    const { data } = await api.post(`${server}/wallet/create-wallet`, formData)
+
+    console.log(data, '===========data')
+
+    dispatch({
+      type: 'createWalletSuccess',
+      payload: {
+        message: data.message,
+        wallet: data.wallet
+      }
+    })
+  } catch (error) {
+    dispatch({
+      type: 'createWalletFail',
+      payload: error.response.data.message
+    })
+  }
+}
