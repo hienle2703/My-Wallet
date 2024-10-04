@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createWallet } from '@/redux/actions/walletActions'
 import Toast from 'react-native-toast-message'
 import { Loading } from '@/components/Loading'
+import BackButton from '@/components/Button/BackButton'
 
 const CreateWalletScreen = ({ navigation }) => {
   const [initialBalance, setInitialBalance] = useState<string>('')
@@ -101,12 +102,7 @@ const CreateWalletScreen = ({ navigation }) => {
     >
       {/* Header */}
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          style={{ position: 'absolute', left: 20 }}
-          onPress={goBack}
-        >
-          <Icon name='arrow-back-ios' size={25} />
-        </TouchableOpacity>
+        <BackButton navigation={navigation} />
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'black' }}>
           Add wallet
         </Text>

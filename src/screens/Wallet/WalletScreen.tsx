@@ -86,8 +86,13 @@ const WalletScreen = ({ navigation }) => {
       { value: currentBalance, color: 'white' },
       { value: initialBalance - currentBalance, color: 'gray' }
     ]
+
+    const goWalletDetail = () =>
+      navigation.navigate('WalletDetail', { wallet: item })
+
     return (
-      <View
+      <TouchableOpacity
+        onPress={goWalletDetail}
         style={{
           width: (Dimensions.get('window').width - 50) / 2,
           backgroundColor: color ?? 'green',
@@ -108,7 +113,7 @@ const WalletScreen = ({ navigation }) => {
           {balanceFormatter(+currentBalance)}
         </Text>
         <Text style={{ fontSize: 15, color: '#D2D2D2' }}>{name}</Text>
-      </View>
+      </TouchableOpacity>
     )
   }
 
@@ -237,7 +242,7 @@ const WalletScreen = ({ navigation }) => {
           data={wallets}
           extraData={wallets}
           numColumns={2}
-          contentContainerStyle={{ marginTop: 10 }}
+          contentContainerStyle={{ marginTop: 10, paddingBottom: 100 }}
           columnWrapperStyle={{
             justifyContent: 'space-between'
           }}
