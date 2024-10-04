@@ -29,8 +29,6 @@ export const createWallet = async (dispatch, formData) => {
 
     const { data } = await api.post(`${server}/wallet/create-wallet`, formData)
 
-    console.log(data, '===========data')
-
     dispatch({
       type: 'createWalletSuccess',
       payload: {

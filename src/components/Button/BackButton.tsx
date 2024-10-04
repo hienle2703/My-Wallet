@@ -17,7 +17,6 @@ const BackButton = ({
 
   return (
     <TouchableOpacity
-      hitSlop={30}
       style={{
         position: 'absolute',
         left: 20,

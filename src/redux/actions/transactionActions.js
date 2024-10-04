@@ -28,7 +28,6 @@ export const getAllTransactionsByWallet = (wallet) => async (dispatch) => {
     })
 
     const { data } = await api.get(`${server}/transaction/all/${wallet}`)
-
     dispatch({
       type: 'getAllTransactionsByWalletSuccess',
       payload: data.transactions ?? []

@@ -242,7 +242,7 @@ const WalletScreen = ({ navigation }) => {
           data={wallets}
           extraData={wallets}
           numColumns={2}
-          contentContainerStyle={{ marginTop: 10 }}
+          contentContainerStyle={{ marginTop: 10, paddingBottom: 100 }}
           columnWrapperStyle={{
             justifyContent: 'space-between'
           }}
