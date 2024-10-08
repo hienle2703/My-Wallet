@@ -15,7 +15,7 @@ export const signIn = (email, password) => async (dispatch) => {
 
     dispatch({
       type: 'loginSuccess',
-      payload: data.message
+      payload: data
     })
   } catch (error) {
     dispatch({
@@ -39,7 +39,7 @@ export const signUp = (name, email, password) => async (dispatch) => {
 
     dispatch({
       type: 'signUpSuccess',
-      payload: data.message
+      payload: data
     })
   } catch (error) {
     dispatch({
@@ -50,14 +50,12 @@ export const signUp = (name, email, password) => async (dispatch) => {
 }
 
 export const verifyToken = async (dispatch) => {
-  console.log('==============START')
   try {
     dispatch({
       type: 'verifyTokenRequest'
     })
 
     const { data } = await api.post(`${server}/user/verify`)
-    console.log(data, '==============data')
 
     dispatch({
       type: 'verifyTokenSuccess',
