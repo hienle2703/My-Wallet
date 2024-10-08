@@ -1,7 +1,6 @@
 import { View, Text, StatusBar, FlatList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native'
-import BackButton from '@/components/Button/BackButton'
 import { styles } from './WalletDetailScreenStyle'
 import { balanceFormatter } from '@/utils/balanceFormatter'
 import { useDispatch, useSelector } from 'react-redux'

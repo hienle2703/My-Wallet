@@ -82,7 +82,7 @@ const BottomTabs = () => {
       />
       <Tab.Screen
         name='Wallet'
-        component={WalletScreen}
+        component={WalletStackScreen}
         options={{
           tabBarIcon: ({ color, size, focused }) =>
             renderIndicatorTab('wallet', color, focused, size)

@@ -1,12 +1,12 @@
 import { View, Text, StatusBar, Modal, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import BackButton from '@/components/Button/BackButton'
 import { TextInput } from 'react-native-gesture-handler'
 import FastImage from 'react-native-fast-image'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { dateToShowFormat } from '@/utils/dateFormatter'
 import DatePicker from 'react-native-date-picker'
+import BackButton from '@/components/Button/BackButton'
 
 const AddTransactionScreen = ({ navigation }) => {
   const [amount, setAmount] = useState<string>('')
@@ -200,7 +200,7 @@ const AddTransactionScreen = ({ navigation }) => {
             <Icon name='menu' size={24} color={'#B4B4B4'} />
           </View>
           <Text style={{ width: '80%' }}>
-            {chosenCategory?.name ?? 'Choose Category'}
+            {note ?? 'Note'}
           </Text>
           <Icon
             name='chevron-right'
