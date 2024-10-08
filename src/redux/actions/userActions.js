@@ -50,12 +50,14 @@ export const signUp = (name, email, password) => async (dispatch) => {
 }
 
 export const verifyToken = async (dispatch) => {
+  console.log('==============START')
   try {
     dispatch({
       type: 'verifyTokenRequest'
     })
 
     const { data } = await api.post(`${server}/user/verify`)
+    console.log(data, '==============data')
 
     dispatch({
       type: 'verifyTokenSuccess',
@@ -81,7 +83,6 @@ export const updateAvatar = (formData) => async (dispatch) => {
       },
       withCredentials: true
     })
-
 
     dispatch({
       type: 'updateAvatarSuccess',

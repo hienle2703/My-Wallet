@@ -25,4 +25,47 @@ const transactionDateFormat = (date: Date) => {
   return dateFormatted
 }
 
-export { transactionDateFormat }
+const dateToShowFormat = (date) => {
+  const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ]
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ]
+
+  const dayOfWeek = days[date.getDay()]
+  const dayOfMonth = date.getDate()
+  const month = months[date.getMonth()]
+  const year = date.getFullYear()
+
+  // Thêm hậu tố cho ngày
+  const suffix =
+    dayOfMonth % 10 === 1 && dayOfMonth !== 11
+      ? 'st'
+      : dayOfMonth % 10 === 2 && dayOfMonth !== 12
+      ? 'nd'
+      : dayOfMonth % 10 === 3 && dayOfMonth !== 13
+      ? 'rd'
+      : 'th'
+
+  return `${dayOfWeek}, ${dayOfMonth}${suffix} ${month} ${year}`
+}
+
+export { transactionDateFormat, dateToShowFormat }
