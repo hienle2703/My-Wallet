@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   screenBase: {
@@ -18,7 +18,8 @@ export default StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 10
+    paddingBottom: 10,
+    paddingTop: Platform.OS === 'ios' ? 10 : 0
   },
   avatarContainer: {
     marginTop: 15

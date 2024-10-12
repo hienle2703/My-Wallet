@@ -40,9 +40,6 @@ export const styles = StyleSheet.create({
     paddingBottom: 200
   },
   addBtn: {
-    padding: 10,
-    borderRadius: 40,
-    backgroundColor: '#148D00',
     position: 'absolute',
     bottom: 80,
     right: 10

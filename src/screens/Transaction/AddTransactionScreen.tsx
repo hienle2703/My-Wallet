@@ -1,4 +1,11 @@
-import { View, Text, StatusBar, Modal, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  StatusBar,
+  Modal,
+  TouchableOpacity,
+  Platform
+} from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TextInput } from 'react-native-gesture-handler'
@@ -7,6 +14,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { dateToShowFormat } from '@/utils/dateFormatter'
 import DatePicker from 'react-native-date-picker'
 import BackButton from '@/components/Button/BackButton'
+import LinearGradient from 'react-native-linear-gradient'
+import { amountFormatter, balanceFormatter } from '@/utils/balanceFormatter'
+import { styles } from './AddTransactionScreenStyles'
 
 const AddTransactionScreen = ({ navigation }) => {
   const [amount, setAmount] = useState<string>('')
@@ -15,43 +25,33 @@ const AddTransactionScreen = ({ navigation }) => {
   const [date, setDate] = useState(new Date())
   const [isShowDatePicker, setIsShowDatePicker] = useState(false)
 
+  const onChangeAmount = (value) => {
+
+    // TODO: Sao cái hàm này nó không work??? 
+
+    // const valueString = value.replace(/[^0-9]/g, '')
+    // console.log(valueString, '=====valueString')
+    const formattedAmount = amountFormatter(value)
+    console.log(formattedAmount, '=====formattedAmount')
+    setAmount(formattedAmount)
+  }
+
+  const onCloseModal = () => {
+    setIsShowDatePicker(false)
+  }
+
   const renderDatePickerModal = () => {
     return (
       <Modal visible={isShowDatePicker} animationType='slide' transparent>
         <View
-          style={{
-            backgroundColor: 'white',
-
-            width: '100%',
-            paddingBottom: 50,
-            paddingTop: 20,
-            alignItems: 'center',
-            position: 'absolute',
-            bottom: 0,
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 2
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-
-            elevation: 5
-          }}
+          style={styles.modalContainer}
         >
           <View
-            style={{ width: '100%', alignItems: 'flex-end', paddingRight: 20 }}
+            style={styles.closeContainer}
           >
             <TouchableOpacity
-              style={{
-                backgroundColor: '#D9D9D9',
-                padding: 5,
-                borderRadius: 20
-              }}
-              onPress={() => setIsShowDatePicker(false)}
+              style={styles.closeBtn}
+              onPress={onCloseModal}
             >
               <Icon name='close' size={20} color={'white'} />
             </TouchableOpacity>
@@ -117,22 +117,18 @@ const AddTransactionScreen = ({ navigation }) => {
             đ
           </Text>
           <TextInput
-            style={{
-              borderBottomColor: '#D3D3D3',
-              borderBottomWidth: 1,
-              width: '100%'
-            }}
+            value={amount}
+            onChangeText={onChangeAmount}
+            keyboardType='numeric'
+            returnKeyType='done'
+            style={styles.amountInput}
           />
         </View>
       </View>
 
       {/* Category */}
       <View
-        style={{
-          marginTop: 30,
-          flexDirection: 'row',
-          alignItems: 'center'
-        }}
+        style={styles.rowContainer}
       >
         <View
           style={{
@@ -159,74 +155,61 @@ const AddTransactionScreen = ({ navigation }) => {
               />
             )}
           </View>
-          <Text style={{ width: '80%' }}>
+          <Text style={{ width: '85%' }}>
             {chosenCategory?.name ?? 'Choose Category'}
           </Text>
           <Icon
             name='chevron-right'
             size={20}
             color={'#B4B4B4'}
-            style={{ marginRight: 10 }}
+            style={{ right: 10, position: 'absolute' }}
           />
         </View>
       </View>
       <View
-        style={{
-          height: 1,
-          backgroundColor: '#D3D3D3',
-          width: '85%',
-          alignSelf: 'flex-end',
-          marginTop: 10
-        }}
+        style={styles.line}
       />
 
       {/* Note */}
       <View
-        style={{
-          marginTop: 30,
-          flexDirection: 'row',
-          alignItems: 'center'
-        }}
+        style={styles.rowContainer}
       >
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between',
             flex: 1
           }}
         >
           <View style={{ width: '15%', alignItems: 'center' }}>
             <Icon name='menu' size={24} color={'#B4B4B4'} />
           </View>
-          <Text style={{ width: '80%' }}>
-            {note ?? 'Note'}
-          </Text>
+          <TextInput
+            placeholder='Note'
+            value={note}
+            onChangeText={(value) => setNote(value)}
+            style={{
+              borderBottomColor: '#D3D3D3',
+              borderBottomWidth: 1,
+              width: '85%',
+              paddingVertical: Platform.OS === 'ios' ? 10 : 0
+            }}
+          />
           <Icon
             name='chevron-right'
             size={20}
             color={'#B4B4B4'}
-            style={{ marginRight: 10 }}
+            style={{ position: 'absolute', right: 10 }}
+            onPress={() => {
+              // TODO: Add trang thêm note dài
+            }}
           />
         </View>
       </View>
-      <View
-        style={{
-          height: 1,
-          backgroundColor: '#D3D3D3',
-          width: '85%',
-          alignSelf: 'flex-end',
-          marginTop: 10
-        }}
-      />
 
       {/* Date */}
       <View
-        style={{
-          marginTop: 30,
-          flexDirection: 'row',
-          alignItems: 'center'
-        }}
+        style={styles.rowContainer}
       >
         <View
           style={{
@@ -239,28 +222,38 @@ const AddTransactionScreen = ({ navigation }) => {
           <View style={{ width: '15%', alignItems: 'center' }}>
             <Icon name='calendar-today' size={24} color={'#B4B4B4'} />
           </View>
-          <Text style={{ width: '80%', color: 'black' }}>
+          <Text style={{ width: '85%', color: 'black' }}>
             {dateToShowFormat(date)}
           </Text>
           <Icon
             name='chevron-right'
             size={20}
             color={'#B4B4B4'}
-            style={{ marginRight: 10 }}
+            style={{ position: 'absolute', right: 10 }}
             onPress={() => setIsShowDatePicker(true)}
           />
         </View>
       </View>
+
       <View
-        style={{
-          height: 1,
-          backgroundColor: '#D3D3D3',
-          width: '85%',
-          alignSelf: 'flex-end',
-          marginTop: 10
-        }}
+        style={styles.line}
       />
 
+      {/* // TODO: Thêm mục chọn wallet */}
+
+      {/* Save Button */}
+      <TouchableOpacity
+        style={styles.addBtn}
+      >
+        <LinearGradient
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 0 }}
+          colors={['#000000', '#17B556']}
+          style={styles.linearAdd}
+        >
+          <Text style={styles.addTxt}>Save Transaction</Text>
+        </LinearGradient>
+      </TouchableOpacity>
       {renderDatePickerModal()}
     </SafeAreaView>
   )

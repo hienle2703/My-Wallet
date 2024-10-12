@@ -12,6 +12,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import CreateWalletScreen from '@/screens/Wallet/Create-Wallet/CreateWalletScreen'
 import WalletDetailScreen from '@/screens/Wallet/Wallet-Detail/WalletDetailScreen'
 import { AddTransactionScreen } from '@/screens/Transaction'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 const WalletStack = createNativeStackNavigator()
 const WalletStackScreen = () => {
@@ -24,7 +25,10 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name='WalletHome' component={WalletScreen} />
       <WalletStack.Screen name='CreateWallet' component={CreateWalletScreen} />
       <WalletStack.Screen name='WalletDetail' component={WalletDetailScreen} />
-      <WalletStack.Screen name='AddTransaction' component={AddTransactionScreen} />
+      <WalletStack.Screen
+        name='AddTransaction'
+        component={AddTransactionScreen}
+      />
     </WalletStack.Navigator>
   )
 }
@@ -39,7 +43,9 @@ const BottomTabs = () => {
     size: number
   ) => {
     return (
-      <Animated.View style={[{ alignItems: 'center' }]}>
+      <Animated.View
+        style={[{ alignItems: 'center', justifyContent: 'center' }]}
+      >
         <MaterialCommunityIcons name={iconName} color={color} size={size} />
         {focused && <View style={styles.indicatorDot} />}
       </Animated.View>
@@ -47,48 +53,50 @@ const BottomTabs = () => {
   }
 
   return (
-    <Tab.Navigator
-      initialRouteName='Home'
-      screenOptions={{
-        tabBarActiveTintColor: 'white',
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarStyle: styles.tabBarStyle
-      }}
-    >
-      <Tab.Screen
-        name='Home'
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ color, size, focused }) =>
-            renderIndicatorTab('home', color, focused, size)
+    <SafeAreaProvider>
+      <Tab.Navigator
+        initialRouteName='Home'
+        screenOptions={{
+          tabBarActiveTintColor: 'white',
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarStyle: styles.tabBarStyle,
         }}
-      />
-      <Tab.Screen
-        name='Calendar'
-        component={CalendarScreen}
-        options={{
-          tabBarIcon: ({ color, size, focused }) =>
-            renderIndicatorTab('calendar-month', color, focused, size)
-        }}
-      />
-      <Tab.Screen
-        name='Statistic'
-        component={StatisticScreen}
-        options={{
-          tabBarIcon: ({ color, size, focused }) =>
-            renderIndicatorTab('chart-bar', color, focused, size)
-        }}
-      />
-      <Tab.Screen
-        name='Wallet'
-        component={WalletStackScreen}
-        options={{
-          tabBarIcon: ({ color, size, focused }) =>
-            renderIndicatorTab('wallet', color, focused, size)
-        }}
-      />
-    </Tab.Navigator>
+      >
+        <Tab.Screen
+          name='Home'
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({ color, size, focused }) =>
+              renderIndicatorTab('home', color, focused, size)
+          }}
+        />
+        <Tab.Screen
+          name='Calendar'
+          component={CalendarScreen}
+          options={{
+            tabBarIcon: ({ color, size, focused }) =>
+              renderIndicatorTab('calendar-month', color, focused, size)
+          }}
+        />
+        <Tab.Screen
+          name='Statistic'
+          component={StatisticScreen}
+          options={{
+            tabBarIcon: ({ color, size, focused }) =>
+              renderIndicatorTab('chart-bar', color, focused, size)
+          }}
+        />
+        <Tab.Screen
+          name='Wallet'
+          component={WalletStackScreen}
+          options={{
+            tabBarIcon: ({ color, size, focused }) =>
+              renderIndicatorTab('wallet', color, focused, size)
+          }}
+        />
+      </Tab.Navigator>
+    </SafeAreaProvider>
   )
 }
 

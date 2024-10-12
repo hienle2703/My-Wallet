@@ -7,10 +7,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllTransactionsByWallet } from '@/redux/actions/transactionActions'
 import FastImage from 'react-native-fast-image'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import LinearGradient from 'react-native-linear-gradient'
 
 const renderKeyExtractor = (_, index) => index.toString()
 
 const WalletDetailScreen = ({ navigation }) => {
+  const insets = useSafeAreaInsets()
+
   const route = useRoute<any>()
   const { wallet } = route.params || {}
   const { color, currentBalance, initialBalance, name } = wallet || {}
@@ -238,15 +242,20 @@ const WalletDetailScreen = ({ navigation }) => {
   return (
     <View style={styles.screenContainer}>
       <StatusBar barStyle={'light-content'} />
-      <View style={styles.headerContainer}>
+      <LinearGradient
+        start={{ x: 0, y: 1 }}
+        end={{ x: 1, y: 0 }}
+        colors={['#000000', '#17B556']}
+        style={[styles.headerContainer, { paddingTop: insets.top }]}
+      >
         <TouchableOpacity
-          style={styles.backBtn}
+          style={[styles.backBtn, { marginTop: insets.top }]}
           onPress={() => navigation.goBack()}
         >
           <Icon name='arrow-back-ios' size={25} color={'white'} />
         </TouchableOpacity>
         <Text style={styles.headerText}>{name}</Text>
-      </View>
+      </LinearGradient>
 
       <FlatList
         data={groupTransactions}
@@ -257,8 +266,18 @@ const WalletDetailScreen = ({ navigation }) => {
         ListHeaderComponent={renderTransactionsHeader}
       />
 
-      <TouchableOpacity style={styles.addBtn} onPress={goAddTransaction}>
-        <Icon color={'white'} name={'add'} size={30} />
+      <TouchableOpacity
+        style={[styles.addBtn, { bottom: 80 + insets.bottom }]}
+        onPress={goAddTransaction}
+      >
+        <LinearGradient
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 0 }}
+          colors={['#000000', '#17B556']}
+          style={{ borderRadius: 50, padding: 10 }}
+        >
+          <Icon color={'white'} name={'add'} size={30} />
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   )

@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Alert, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/Feather'
 import { useDispatch, useSelector } from 'react-redux'
@@ -57,14 +57,14 @@ const SignInScreen = ({ navigation }) => {
         </Text>
         <TextInput
           placeholder='Email'
-          style={{ borderBottomWidth: 2, borderBottomColor: '#9D9D9D' }}
+          style={{ borderBottomWidth: 2, borderBottomColor: '#9D9D9D', paddingVertical: Platform.OS === 'ios' ? 10 : 0 }}
           onChangeText={(e) => setEmail(e)}
           autoCapitalize='none'
         />
         <View style={{ justifyContent: 'center', marginTop: 20 }}>
           <TextInput
             placeholder='Password'
-            style={{ borderBottomWidth: 2, borderBottomColor: '#9D9D9D' }}
+            style={{ borderBottomWidth: 2, borderBottomColor: '#9D9D9D', paddingVertical: Platform.OS === 'ios' ? 10 : 0 }}
             secureTextEntry={isShowPassword}
             maxLength={16}
             onChangeText={(password) => setPassword(password)}

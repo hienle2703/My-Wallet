@@ -19,6 +19,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { updateAvatar } from '@/redux/actions/userActions'
 import mime from 'mime'
 import { Screen } from 'react-native-screens'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const TOTAL_BALANCE = '20.000.000đ'
 
@@ -27,6 +28,8 @@ const renderKeyWallets = (_, index) => {
 }
 
 const WalletScreen = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
+
   const { user } = useSelector((state: any) => state.user)
   const { wallets } = useSelector((state: any) => state.wallet)
 
@@ -126,7 +129,7 @@ const WalletScreen = ({ navigation }) => {
       style={{
         flex: 1,
         backgroundColor: 'white',
-        paddingTop: StatusBar.currentHeight
+        paddingTop: StatusBar.currentHeight ?? 0 + insets.top
       }}
     >
       <StatusBar barStyle={'dark-content'} />
